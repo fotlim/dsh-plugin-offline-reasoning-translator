@@ -1,0 +1,173 @@
+{
+  "label": "beams=1 norepeat=off glossary=off cleanup=off",
+  "loadMs": 1049,
+  "median": 617,
+  "mean": 616,
+  "rss": 583,
+  "generation": {
+    "max_new_tokens": 512
+  },
+  "useGlossary": false,
+  "rows": [
+    {
+      "index": 1,
+      "ms": 806,
+      "en": "When a grep over the log finds nothing, the parser may still be skipping the empty list.",
+      "masked": "When a grep over the log finds nothing, the parser may still be skipping the empty list.",
+      "zh": "当日志上的角角没有找到任何结果时, 分析器仍然可能跳过空列表 。",
+      "raw": "当日志上的角角没有找到任何结果时, 分析器仍然可能跳过空列表 。"
+    },
+    {
+      "index": 2,
+      "ms": 431,
+      "en": "The BLEU score dropped because the store never updated its index.",
+      "masked": "The BLEU score dropped because the store never updated its index.",
+      "zh": "百老汇分数下降是因为商店从未更新指数。",
+      "raw": "百老汇分数下降是因为商店从未更新指数。"
+    },
+    {
+      "index": 3,
+      "ms": 463,
+      "en": "This is an edge case: a race condition between the worker thread and the event loop.",
+      "masked": "This is an edge case: a race condition between the worker thread and the event loop.",
+      "zh": "这是一个边缘情况:工人线和事件环之间的种族状况。",
+      "raw": "这是一个边缘情况:工人线和事件环之间的种族状况。"
+    },
+    {
+      "index": 4,
+      "ms": 631,
+      "en": "Make the handler idempotent so a retried request cannot apply the side effects twice.",
+      "masked": "Make the handler idempotent so a retried request cannot apply the side effects twice.",
+      "zh": "使处理者能满足以下条件:重新审理的请求不能两次应用副作用。",
+      "raw": "使处理者能满足以下条件:重新审理的请求不能两次应用副作用。"
+    },
+    {
+      "index": 5,
+      "ms": 596,
+      "en": "The dependency injection container resolves the middleware on first use.",
+      "masked": "The dependency injection container resolves the middleware on first use.",
+      "zh": "依赖注射容器首先使用时可解决中间器械问题。",
+      "raw": "依赖注射容器首先使用时可解决中间器械问题。"
+    },
+    {
+      "index": 6,
+      "ms": 649,
+      "en": "Fix the memory leak by clearing the tokenizer cache after each batch.",
+      "masked": "Fix the memory leak by clearing the tokenizer cache after each batch.",
+      "zh": "每批后清除代号器缓存,以弥补内存泄漏。",
+      "raw": "每批后清除代号器缓存,以弥补内存泄漏。"
+    },
+    {
+      "index": 7,
+      "ms": 584,
+      "en": "The stack trace points at the serializer, not at the recursive function.",
+      "masked": "The stack trace points at the serializer, not at the recursive function.",
+      "zh": "序列器上的堆叠跟踪点, 而不是递归函数 。",
+      "raw": "序列器上的堆叠跟踪点, 而不是递归函数 。"
+    },
+    {
+      "index": 8,
+      "ms": 664,
+      "en": "A cold start costs eleven hundred milliseconds, so warm up the pipeline once.",
+      "masked": "A cold start costs eleven hundred milliseconds, so warm up the pipeline once.",
+      "zh": "冷冻启动耗资1100毫秒 所以一次暖和输油管",
+      "raw": "冷冻启动耗资1100毫秒 所以一次暖和输油管"
+    },
+    {
+      "index": 9,
+      "ms": 557,
+      "en": "The instruction says to refactor the runner into eight independent arms.",
+      "masked": "The instruction says to refactor the runner into eight independent arms.",
+      "zh": "指令要求把跑者重新装进八个独立的手臂",
+      "raw": "指令要求把跑者重新装进八个独立的手臂"
+    },
+    {
+      "index": 10,
+      "ms": 586,
+      "en": "We cut network round trips by caching the response for five minutes.",
+      "masked": "We cut network round trips by caching the response for five minutes.",
+      "zh": "我们把回应时间缩短五分钟 切断网络的往返飞行",
+      "raw": "我们把回应时间缩短五分钟 切断网络的往返飞行"
+    },
+    {
+      "index": 11,
+      "ms": 760,
+      "en": "The type inference fails because the closure captures a mutable variable.",
+      "masked": "The type inference fails because the closure captures a mutable variable.",
+      "zh": "类型推论失败, 因为封闭点捕捉到可变变量 。",
+      "raw": "类型推论失败, 因为封闭点捕捉到可变变量 。"
+    },
+    {
+      "index": 12,
+      "ms": 672,
+      "en": "Please review the pull request before the breaking change lands.",
+      "masked": "Please review the pull request before the breaking change lands.",
+      "zh": "请在拆迁土地之前审查拉动请求。",
+      "raw": "请在拆迁土地之前审查拉动请求。"
+    },
+    {
+      "index": 13,
+      "ms": 737,
+      "en": "Run the integration test with `pnpm test --filter core` and paste the output.",
+      "masked": "Run the integration test with <<0>> and paste the output.",
+      "zh": "以 `pnpm test --filter core` 运行整合测试,并粘贴输出。",
+      "raw": "以 < <0> 运行整合测试,并粘贴输出。"
+    },
+    {
+      "index": 14,
+      "ms": 667,
+      "en": "The throughput of the thread pool is bounded by the garbage collection pauses.",
+      "masked": "The throughput of the thread pool is bounded by the garbage collection pauses.",
+      "zh": "线索池的输送量 被垃圾收集暂停的 连接起来",
+      "raw": "线索池的输送量 被垃圾收集暂停的 连接起来"
+    },
+    {
+      "index": 15,
+      "ms": 678,
+      "en": "Serialization of the embedding table dominates the latency budget.",
+      "masked": "Serialization of the embedding table dominates the latency budget.",
+      "zh": "嵌入表的分级化在长期预算中占主导地位。",
+      "raw": "嵌入表的分级化在长期预算中占主导地位。"
+    },
+    {
+      "index": 16,
+      "ms": 617,
+      "en": "Check https://example.com/docs for the exact CLI flags.",
+      "masked": "Check <<0>> for the exact CLI flags.",
+      "zh": "检查 CLI 的准确旗帜 https://example.com/docs 。",
+      "raw": "检查 CLI 的准确旗帜 < < 0> 。"
+    },
+    {
+      "index": 17,
+      "ms": 545,
+      "en": "The worker threads share no memory, which removes most of the race conditions.",
+      "masked": "The worker threads share no memory, which removes most of the race conditions.",
+      "zh": "工人的线条没有记忆,这消除了大部分种族条件。",
+      "raw": "工人的线条没有记忆,这消除了大部分种族条件。"
+    },
+    {
+      "index": 18,
+      "ms": 595,
+      "en": "If the source map is missing, the error points at the bundled file.",
+      "masked": "If the source map is missing, the error points at the bundled file.",
+      "zh": "如果缺少源地图,则在捆绑文件处的错误点为错误点。",
+      "raw": "如果缺少源地图,则在捆绑文件处的错误点为错误点。"
+    },
+    {
+      "index": 19,
+      "ms": 576,
+      "en": "The hash table grows without bound because the iterator never releases keys.",
+      "masked": "The hash table grows without bound because the iterator never releases keys.",
+      "zh": "散列表的生长没有约束 因为传动器从不释放键。",
+      "raw": "散列表的生长没有约束 因为传动器从不释放键。"
+    },
+    {
+      "index": 20,
+      "ms": 497,
+      "en": "Idempotency matters here: replaying the event must not duplicate the record.",
+      "masked": "Idempotency matters here: replaying the event must not duplicate the record.",
+      "zh": "在此处理有关能力的事项:重播事件时不得重复记录。",
+      "raw": "在此处理有关能力的事项:重播事件时不得重复记录。"
+    }
+  ]
+}

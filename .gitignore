@@ -1,0 +1,9 @@
+node_modules/
+models/
+*.part
+*.tmp
+*.log
+.DS_Store
+Thumbs.dbscripts/*.out.txt
+scripts/*.err.txt
+scripts/*.txt

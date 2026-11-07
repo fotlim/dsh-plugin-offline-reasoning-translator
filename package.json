@@ -1,0 +1,57 @@
+{
+  "name": "dsh-plugin-offline-reasoning-translator",
+  "version": "0.6.0",
+  "description": "Offline English-to-Chinese translation of reasoning text in DSH sessions, powered by a local NMT model that is downloaded on first use.",
+  "type": "module",
+  "license": "Apache-2.0",
+  "icon": "./icon.svg",
+  "keywords": [
+    "dsh-plugin",
+    "translation",
+    "offline",
+    "reasoning"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./models.json": "./models.json",
+    "./icon.svg": "./icon.svg",
+    "./icon.png": "./icon.png",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "models.json",
+    "lib/**",
+    "locale/*.json",
+    "icon.svg",
+    "icon.png",
+    "LICENSE",
+    "README.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-chat"
+      ]
+    }
+  },
+  "dependencies": {
+    "@deepseek-ai/dsh-typert-protocol": "0.2.1-rc.3",
+    "@deepseek-ai/schemastery": "~3.18.5",
+    "@huggingface/transformers": "4.3.2"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.5"
+  }
+}

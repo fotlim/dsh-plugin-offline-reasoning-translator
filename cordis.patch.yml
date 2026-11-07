@@ -1,0 +1,3 @@
+- insert:
+    - id: offline-reasoning-translator
+      name: 'dsh-plugin-offline-reasoning-translator'

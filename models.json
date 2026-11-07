@@ -1,0 +1,76 @@
+{
+  "default": "opus-mt-en-zh-q8",
+  "repo": "Xenova/opus-mt-en-zh",
+  "revision": "046f55aec303cdee3e0318604406d4df20f1e8ea",
+  "pipeline": "translation",
+  "endpoints": ["https://huggingface.co", "https://hf-mirror.com"],
+  "shared": {
+    "config.json": { "size": 1503, "sha256": null },
+    "generation_config.json": { "size": 293, "sha256": null },
+    "tokenizer.json": { "size": 6380952, "sha256": null },
+    "tokenizer_config.json": { "size": 282, "sha256": null },
+    "special_tokens_map.json": { "size": 74, "sha256": null },
+    "vocab.json": { "size": 1747795, "sha256": null },
+    "source.spm": { "size": 806435, "sha256": null },
+    "target.spm": { "size": 804600, "sha256": null }
+  },
+  "models": [
+    {
+      "id": "opus-mt-en-zh-q8",
+      "label": "Balanced (INT8 quantized)",
+      "dtype": "q8",
+      "license": "apache-2.0",
+      "bundled": false,
+      "recommended": true,
+      "measured": { "diskMiB": 108, "coldMs": 1114, "warmMs": 493, "rssMiB": 557 },
+      "files": {
+        "onnx/encoder_model_quantized.onnx": {
+          "size": 52899742,
+          "sha256": "d3b7912bf6a9bd27e4c074c2df91d4ff3d5b4bc5f7f6c8d7cc9c805c98fbafee"
+        },
+        "onnx/decoder_model_merged_quantized.onnx": {
+          "size": 60212804,
+          "sha256": "023be4f841f4c47cd65fffcbaa81c0d99d7f7e0138f7ba0e03fa220a4e688aff"
+        }
+      }
+    },
+    {
+      "id": "opus-mt-en-zh-fp16",
+      "label": "Fast (FP16)",
+      "dtype": "fp16",
+      "license": "apache-2.0",
+      "bundled": false,
+      "recommended": false,
+      "measured": { "diskMiB": 213, "coldMs": null, "warmMs": null, "rssMiB": null },
+      "files": {
+        "onnx/encoder_model_fp16.onnx": {
+          "size": 105062004,
+          "sha256": "3848296c1980f6ae3ccea955a33da9646c538b45dd47bef001c56252667a4376"
+        },
+        "onnx/decoder_model_merged_fp16.onnx": {
+          "size": 118354621,
+          "sha256": "181e3c09302fcb57d5afcdf9cba96058a2584959e55c0811e9f09088a207ad09"
+        }
+      }
+    },
+    {
+      "id": "opus-mt-en-zh-fp32",
+      "label": "Highest fidelity (FP32)",
+      "dtype": "fp32",
+      "license": "apache-2.0",
+      "bundled": false,
+      "recommended": false,
+      "measured": { "diskMiB": 446, "coldMs": 2658, "warmMs": 341, "rssMiB": 1052 },
+      "files": {
+        "onnx/encoder_model.onnx": {
+          "size": 209938220,
+          "sha256": "6948db6bbc4869581eddf935d8486ca96388e4395c06a86c35e4051cb11373b9"
+        },
+        "onnx/decoder_model_merged.onnx": {
+          "size": 235839236,
+          "sha256": "5cb22f9ac32429b8211ae45e5940d9c05dfd66cf5847fd349ac6e391cd671e1d"
+        }
+      }
+    }
+  ]
+}

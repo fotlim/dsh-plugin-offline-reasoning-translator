@@ -1,0 +1,100 @@
+{"id":"p01","category":"prose","en":"The parser fails on the second pass because the token stream is not reset between documents."}
+{"id":"p02","category":"prose","en":"I need to check whether the cache returns a stale entry after the model is switched."}
+{"id":"p03","category":"prose","en":"This is an edge case where the worker exits before the drain loop observes the outstanding call."}
+{"id":"p04","category":"prose","en":"The race condition only appears when two requests arrive within the same millisecond."}
+{"id":"p05","category":"prose","en":"Reading the whole file into memory is wasteful here, since we only need the first hundred lines."}
+{"id":"p06","category":"prose","en":"The pipeline stalls because the previous stage never signals that it is finished."}
+{"id":"p07","category":"prose","en":"Every fragment is translated on its own, so the model never sees the sentence that came before."}
+{"id":"p08","category":"prose","en":"If the endpoint refuses the range request, the download has to start over from the beginning."}
+{"id":"p09","category":"prose","en":"The settings file is written through a temporary file so a partial write cannot be read back."}
+{"id":"p10","category":"prose","en":"I should verify that the checksum matches before moving the file into place."}
+{"id":"p11","category":"prose","en":"The decoder repeats the same clause until the token budget runs out, which means the output is unusable."}
+{"id":"p12","category":"prose","en":"Because the native call is synchronous, every inference blocks the event loop for about two hundred milliseconds."}
+{"id":"p13","category":"prose","en":"The user asked for a sidebar entry, so the panel has to be registered under two slots that share one identifier."}
+{"id":"p14","category":"prose","en":"Registering only the icon leaves a button that cannot be opened, and registering only the panel leaves a panel nothing can reach."}
+{"id":"p15","category":"prose","en":"The default bundle cannot be removed because the plugin ships with those weights and has nothing else to fall back to."}
+{"id":"p16","category":"prose","en":"Switching precision rebuilds the worker, because the old weights would otherwise stay resident."}
+{"id":"p17","category":"prose","en":"A long sentence is cut into pieces of roughly one hundred and eighty characters before it is sent to the model."}
+{"id":"p18","category":"prose","en":"Abbreviations such as e.g. and i.e. must not be treated as the end of a sentence."}
+{"id":"p19","category":"prose","en":"The guard recognises a loop by looking for a short substring that repeats many times in a row."}
+{"id":"p20","category":"prose","en":"When the guard fires, the English sentence is shown instead, since a visible loop is worse than untranslated text."}
+{"id":"p21","category":"prose","en":"The retry uses a stricter repetition penalty and forbids even two-token repeats."}
+{"id":"p22","category":"prose","en":"Measured on the same sample, the whole paragraph took about eight seconds and looped, while sentence by sentence took five."}
+{"id":"p23","category":"prose","en":"Nothing in this path writes to the session log, so a translation can never change what the model actually said."}
+{"id":"p24","category":"prose","en":"The cache key includes the model identifier and the glossary, otherwise an edited term would keep serving the old rendering."}
+{"id":"p25","category":"prose","en":"Short answers are not judged on length, because a two-word reply is legitimately shorter than its source."}
+{"id":"p26","category":"prose","en":"The style element is looked up by a data attribute, so a hot reload replaces the rules instead of appending a second copy."}
+{"id":"p27","category":"prose","en":"Colours come from theme variables, and a variable that does not exist silently disables the whole declaration."}
+{"id":"p28","category":"prose","en":"The panel reads and writes the same settings file as the plugin page, so both surfaces stay consistent."}
+{"id":"p29","category":"prose","en":"A zero-argument method must be called with no arguments at all, because the gateway checks the argument count."}
+{"id":"p30","category":"prose","en":"The field is volatile, which means reading it returns a holder rather than the value itself."}
+{"id":"p31","category":"prose","en":"I want to confirm the memory footprint stays flat across a hundred sentences before claiming the plugin is cheap."}
+{"id":"p32","category":"prose","en":"The model loads in about one second from disk and answers the first sentence in half a second after that."}
+{"id":"p33","category":"prose","en":"More threads did not help, and the graphics card was slower than the processor for a model this small."}
+{"id":"p34","category":"prose","en":"Batching two sentences gave no speedup, and batching four produced repeated clauses in the output."}
+{"id":"p35","category":"prose","en":"The downloader falls back to the mirror because the primary endpoint fails every request from this machine."}
+{"id":"p36","category":"prose","en":"Progress is reported per byte, and the panel polls the status method twice a second while a transfer runs."}
+{"id":"p37","category":"prose","en":"An interrupted download resumes from where it stopped instead of starting over."}
+{"id":"p38","category":"prose","en":"The identifier is masked before translation, so the model cannot translate a command name into a Chinese word."}
+{"id":"p39","category":"prose","en":"Masking every technical term made the output worse, because three placeholders in one sentence make the model reorder clauses."}
+{"id":"p40","category":"prose","en":"Concept repairs run on the Chinese side and only fix renderings that were actually observed to be wrong."}
+{"id":"p41","category":"prose","en":"The glossary accepts one term per line, and an equals sign pins a specific rendering."}
+{"id":"p42","category":"prose","en":"The worker is spawned on the first sentence that needs translation, so a session that never expands its reasoning pays nothing."}
+{"id":"p43","category":"prose","en":"Teardown waits for the outstanding native call to finish, because terminating the thread mid-inference crashes the process."}
+{"id":"p44","category":"prose","en":"The request is refused when the model is configured but its weights are not on disk."}
+{"id":"p45","category":"prose","en":"I would rather keep the English sentence than show a translation that reads like a rendering bug."}
+{"id":"p46","category":"prose","en":"The whole correction pass costs microseconds, so it runs on every request instead of being cached."}
+{"id":"p47","category":"prose","en":"Joining wrapped lines back together is what makes a wrapped paragraph translate as one context instead of many fragments."}
+{"id":"p48","category":"prose","en":"If the source ends with a comma, the next line is almost certainly the rest of the same sentence."}
+{"id":"p49","category":"prose","en":"The result is checked before the placeholders are restored, because a restored address would look like a repetition."}
+{"id":"p50","category":"prose","en":"Two failures in a row means the model cannot handle the sentence, and the reader gets the original text."}
+{"id":"i01","category":"identifiers","en":"Run `npm test` before committing, and check that the grep output contains no warnings.","must":["npm test","grep"]}
+{"id":"i02","category":"identifiers","en":"The script prints the BLEU score, which dropped because the tokenizer was not updated.","must":["BLEU","tokenizer"]}
+{"id":"i03","category":"identifiers","en":"The worker calls onnxruntime-node directly, so the ONNX runtime version must match the prebuilt binary."}
+{"id":"i04","category":"identifiers","en":"Set dtype to q8 to load the quantized weights instead of the full precision ones.","must":["dtype","q8"]}
+{"id":"i05","category":"identifiers","en":"The function returns a Promise that resolves to the translation text, and rejects on abort."}
+{"id":"i06","category":"identifiers","en":"The JSON schema declares additionalProperties false, so unknown keys are rejected."}
+{"id":"i07","category":"identifiers","en":"Marian exposes an encoder and a merged decoder, and the merged decoder keeps its own cache."}
+{"id":"i08","category":"identifiers","en":"The LRU cache holds five thousand entries, keyed by a hash of the source text."}
+{"id":"i09","category":"identifiers","en":"The remote method must not be named remove, because that name is taken by the namespace service."}
+{"id":"i10","category":"identifiers","en":"A TypeScript declaration would be nicer, but the runtime only reads the prototype marker."}
+{"id":"i11","category":"identifiers","en":"The panel polls status every five hundred milliseconds while the download is in progress."}
+{"id":"i12","category":"identifiers","en":"Set DSH_OFFLINE_TRANSLATOR_MODEL_ROOT to point the plugin at a different weights directory."}
+{"id":"i13","category":"identifiers","en":"The CLI reports an ignored build script for protobufjs, but the prebuilt binaries are already present."}
+{"id":"i14","category":"identifiers","en":"Use the useCallback hook so the effect does not refetch on every render."}
+{"id":"i15","category":"identifiers","en":"The function returns ok false with an error object instead of throwing, so callers must check the flag."}
+{"id":"c01","category":"code","en":"Open `src/index.ts` and change the default export to the controller class.","must":["src/index.ts"]}
+{"id":"c02","category":"code","en":"The failing line is `const value = map.get(key)!`, which asserts non-null without checking.","must":["map.get(key)"]}
+{"id":"c03","category":"code","en":"Replace `worker.postMessage(...)` with a message that carries the generation options."}
+{"id":"c04","category":"code","en":"The error came from `requireStrictCodec`, which throws when the codec mode is not strict.","must":["requireStrictCodec"]}
+{"id":"c05","category":"code","en":"Call `postprocess(parts.join(''))` once at the end, not per fragment."}
+{"id":"c06","category":"code","en":"The regular expression `/\\u200b/g` removes zero-width spaces from the source."}
+{"id":"c07","category":"code","en":"Wrap the read in a try block, because the file may not exist on first launch."}
+{"id":"c08","category":"code","en":"The settings object is frozen, so writing to it throws in strict mode."}
+{"id":"c09","category":"code","en":"Guard the call with `typeof fn === 'function'` before invoking it."}
+{"id":"c10","category":"code","en":"The test asserts that the injected style element count stays at one after two renders."}
+{"id":"c11","category":"code","en":"Move the abort listener into a finally block, otherwise it leaks on the success path."}
+{"id":"c12","category":"code","en":"The loop skips empty pieces so that a double newline does not produce an empty request."}
+{"id":"c13","category":"code","en":"Iterate the catalog synchronously, since reading a small file at boot is cheaper than an await chain."}
+{"id":"c14","category":"code","en":"The reducer mutates the array it receives, which breaks the memoised selector downstream."}
+{"id":"c15","category":"code","en":"Return early when the identifier is already installed and the size matches."}
+{"id":"l01","category":"list","en":"Three things remain: verify the checksum, register the second slot, and document the settings file."}
+{"id":"l02","category":"list","en":"The plan is short: measure first, then decide whether a bigger model is worth the memory."}
+{"id":"l03","category":"list","en":"Order matters here: normalise the source, split it into sentences, translate each, then clean the punctuation."}
+{"id":"l04","category":"list","en":"Candidates are the small quantised model, the full precision one, and a larger multilingual model that needs more memory."}
+{"id":"l05","category":"list","en":"Two knobs are exposed: the repetition penalty and the maximum number of new tokens."}
+{"id":"l06","category":"list","en":"Remaining risks: the mirror may rate limit, the disk may fill, and the user may switch model mid-sentence."}
+{"id":"l07","category":"list","en":"Steps one and two are done; step three needs the browser to be open, which I cannot do from here."}
+{"id":"l08","category":"list","en":"The settings page groups model selection, the glossary, and the repair switch into one card each."}
+{"id":"l09","category":"list","en":"Accept either an absolute path, a file URL, or a data URL for the input image."}
+{"id":"l10","category":"list","en":"Before shipping, confirm three facts: the package declares a bundle manifest, the repository is old enough, and the description matches the code."}
+{"id":"m01","category":"mixed","en":"The bug is subtle: `JSON.parse` throws on a file that starts with a byte order mark, and the message only says unexpected token.","must":["JSON.parse"]}
+{"id":"m02","category":"mixed","en":"Because the panel and the plugin page read the same file, editing a term in one place must show up in the other without a reload."}
+{"id":"m03","category":"mixed","en":"The downloader writes to a partial file, verifies the checksum, then renames it, so a crash mid-transfer never leaves a half file behind."}
+{"id":"m04","category":"mixed","en":"I expected the smaller model to be faster, but at full precision it answered in three hundred milliseconds against five hundred for the quantised one."}
+{"id":"m05","category":"mixed","en":"The slot contract says a replacement must use a lower priority number and must keep access to the original text, so the panel always offers a way back to the English."}
+{"id":"m06","category":"mixed","en":"If the same sentence appears twice in a session, the second request is served from memory in under a millisecond."}
+{"id":"m07","category":"mixed","en":"The mirror answered where the primary endpoint failed, which is why the downloader takes a list of endpoints instead of a single base address."}
+{"id":"m08","category":"mixed","en":"Nothing leaves the machine: the weights are local, the runtime is local, and the only network call is an optional model download the user starts by hand."}
+{"id":"m09","category":"mixed","en":"A wrapped paragraph arrives as five short lines, and translating each line separately loses the connection between them, so the lines are joined before the splitter runs."}
+{"id":"m10","category":"mixed","en":"The failure was silent: the configuration declared with the wrong schema library made the plugin load and then do nothing, with no error in the log."}

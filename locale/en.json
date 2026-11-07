@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "Offline Reasoning Translator",
+    "description": "Translate English reasoning text into Chinese locally, without sending it to any server."
+  },
+  "translating": "Translating locally…",
+  "failed": "Local translation failed",
+  "modelMissing": "Model not downloaded yet — open the Offline Translation panel in the sidebar and download it",
+  "retry": "Retry",
+  "original": "Show original",
+  "translation": "Show translation",
+  "modelMissing": "Local model not installed",
+  "copy": "Copy code",
+  "copied": "Copied",
+  "codeTitle": "Code",
+  "wrap": "Wrap lines",
+  "unwrap": "Unwrap lines",
+  "footnotes": "Footnotes"
+}

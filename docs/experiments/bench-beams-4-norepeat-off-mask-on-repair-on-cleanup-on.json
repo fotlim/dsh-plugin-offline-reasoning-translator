@@ -1,0 +1,174 @@
+{
+  "label": "beams=4 norepeat=off mask=on repair=on cleanup=on",
+  "loadMs": 1749,
+  "median": 1345,
+  "mean": 1407,
+  "rss": 564,
+  "generation": {
+    "max_new_tokens": 512,
+    "num_beams": 4
+  },
+  "useGlossary": true,
+  "rows": [
+    {
+      "index": 1,
+      "ms": 2222,
+      "en": "When a grep over the log finds nothing, the parser may still be skipping the empty list.",
+      "masked": "When a <<0>> over the log finds nothing, the parser may still be skipping the empty list.",
+      "zh": "当对日志的 grep 上找不到任何时, 分析器仍然可能跳过空列表。",
+      "raw": "当对日志的 < <0> 上找不到任何时, 分析器仍然可能跳过空列表 。"
+    },
+    {
+      "index": 2,
+      "ms": 1100,
+      "en": "The BLEU score dropped because the store never updated its index.",
+      "masked": "The <<0>> score dropped because the store never updated its index.",
+      "zh": "BLEU分数下降是因为商店从未更新指数。",
+      "raw": "< <0>分数下降是因为商店从未更新指数。"
+    },
+    {
+      "index": 3,
+      "ms": 2571,
+      "en": "This is an edge case: a race condition between the worker thread and the event loop.",
+      "masked": "This is an <<3>>: a <<0>> between the <<1>> and the <<2>>.",
+      "zh": "这是边界情况: 竞态条件与事件循环之间的一个工作线程和事件循环。",
+      "raw": "这是 < < 3>: < < < 0 > 与 < < 2 > 之间的一个 < < < 1 > 和 < < 2 > 。"
+    },
+    {
+      "index": 4,
+      "ms": 1566,
+      "en": "Make the handler idempotent so a retried request cannot apply the side effects twice.",
+      "masked": "Make the handler <<1>> so a retried request cannot apply the <<0>> twice.",
+      "zh": "使处理器幂等设置为重试的请求无法两次应用副作用。",
+      "raw": "使处理器 < < 1 > 设置为重新审理的请求无法两次应用 < < 0 > 。"
+    },
+    {
+      "index": 5,
+      "ms": 1518,
+      "en": "The dependency injection container resolves the middleware on first use.",
+      "masked": "The <<0>> container resolves the <<1>> on first use.",
+      "zh": "依赖注入容器在首次使用时解答中间件。",
+      "raw": "< <0> > 容器在首次使用时解答 < <1>。"
+    },
+    {
+      "index": 6,
+      "ms": 1593,
+      "en": "Fix the memory leak by clearing the tokenizer cache after each batch.",
+      "masked": "Fix the <<0>> by clearing the <<1>> cache after each batch.",
+      "zh": "在每个批次后清除 tokenizer 缓存,从而固定内存泄漏。",
+      "raw": "在每个批次后清除 < < 1 > 缓存,从而固定 < < < 0 > 。"
+    },
+    {
+      "index": 7,
+      "ms": 1345,
+      "en": "The stack trace points at the serializer, not at the recursive function.",
+      "masked": "The <<0>> points at the <<1>>, not at the recursive function.",
+      "zh": "stack trace 序列化器上的点,不是在递归函数上的点。",
+      "raw": "< <0> < <1> 上的点,不是在递归函数上的点。"
+    },
+    {
+      "index": 8,
+      "ms": 1498,
+      "en": "A cold start costs eleven hundred milliseconds, so warm up the pipeline once.",
+      "masked": "A <<0>> costs eleven hundred milliseconds, so warm up the pipeline once.",
+      "zh": "A 冷启动需要1,100毫秒,因此,为流水线热一次。",
+      "raw": "A < < <0> 需要1,100毫秒,因此,为输油管热一次。"
+    },
+    {
+      "index": 9,
+      "ms": 1204,
+      "en": "The instruction says to refactor the runner into eight independent arms.",
+      "masked": "The instruction says to <<0>> the runner into eight independent arms.",
+      "zh": "指令对 \" 重构向8个独立臂的跑者说。",
+      "raw": "指令对 \" <0> 向8个独立臂的跑者说。"
+    },
+    {
+      "index": 10,
+      "ms": 1159,
+      "en": "We cut network round trips by caching the response for five minutes.",
+      "masked": "We cut network <<0>> by caching the response for five minutes.",
+      "zh": "我们通过将回复缓存五分钟来切除网络往返。",
+      "raw": "我们通过将回复缓存五分钟来切除网络 <<0> 。"
+    },
+    {
+      "index": 11,
+      "ms": 1346,
+      "en": "The type inference fails because the closure captures a mutable variable.",
+      "masked": "The <<0>> fails because the <<1>> captures a <<2>> variable.",
+      "zh": "类型推断失败,因为闭包显示一个可变变量。",
+      "raw": "< <0> > 失败,因为 < <1> 显示一个 < <2> 变量。"
+    },
+    {
+      "index": 12,
+      "ms": 985,
+      "en": "Please review the pull request before the breaking change lands.",
+      "masked": "Please review the <<0>> before the breaking change lands.",
+      "zh": "请在冲破土地变换之前审查 PR。",
+      "raw": "请在冲破土地变换之前审查 < < <0> 。"
+    },
+    {
+      "index": 13,
+      "ms": 1187,
+      "en": "Run the integration test with `pnpm test --filter core` and paste the output.",
+      "masked": "Run the integration test with <<0>> and paste the output.",
+      "zh": "以 `pnpm test --filter core` 运行整合测试,并粘贴输出。",
+      "raw": "以 < <0> 运行整合测试,并粘贴输出。"
+    },
+    {
+      "index": 14,
+      "ms": 1161,
+      "en": "The throughput of the thread pool is bounded by the garbage collection pauses.",
+      "masked": "The <<2>> of the <<1>> is bounded by the <<0>> pauses.",
+      "zh": "线程池吞吐量受垃圾回收暂停的约束。",
+      "raw": "< <1> < <2> > 受 < <0> 暂停的约束。"
+    },
+    {
+      "index": 15,
+      "ms": 1226,
+      "en": "Serialization of the embedding table dominates the latency budget.",
+      "masked": "<<0>> of the <<1>> table dominates the <<2>> budget.",
+      "zh": "embedding表格的序列化占预算的支配部分。",
+      "raw": "< < <1>表格的 < <0> > 占预算的支配部分。"
+    },
+    {
+      "index": 16,
+      "ms": 1020,
+      "en": "Check https://example.com/docs for the exact CLI flags.",
+      "masked": "Check <<0>> for the exact <<1>> flags.",
+      "zh": "检查 https://example.com/docs 的准确 CLI 旗帜。",
+      "raw": "检查 < 0> 的准确 < < 1 > 旗帜。"
+    },
+    {
+      "index": 17,
+      "ms": 1402,
+      "en": "The worker threads share no memory, which removes most of the race conditions.",
+      "masked": "The <<1>> share no memory, which removes most of the <<0>>.",
+      "zh": "工作线程共享无内存, 内存会删除大部分竞态条件。",
+      "raw": "<1> 共享无内存, 内存会删除大部分 < <0> 。"
+    },
+    {
+      "index": 18,
+      "ms": 1224,
+      "en": "If the source map is missing, the error points at the bundled file.",
+      "masked": "If the <<0>> is missing, the error points at the bundled file.",
+      "zh": "如果缺少 source map,则在捆绑文件处的错误点。",
+      "raw": "如果缺少 < < <0>,则在捆绑文件处的错误点。"
+    },
+    {
+      "index": 19,
+      "ms": 1694,
+      "en": "The hash table grows without bound because the iterator never releases keys.",
+      "masked": "The <<0>> grows without bound because the <<1>> never releases keys.",
+      "zh": "哈希表生长没有约束, 因为迭代器永远不会释放密钥。",
+      "raw": "<<0> 生长没有约束, 因为 < <1> 永远不会释放密钥 。"
+    },
+    {
+      "index": 20,
+      "ms": 1123,
+      "en": "Idempotency matters here: replaying the event must not duplicate the record.",
+      "masked": "<<0>> matters here: replaying the event must not duplicate the record.",
+      "zh": "幂等性这里的事项: 重放事件时不得重复记录。",
+      "raw": "<0> 这里的事项: 重播事件时不得重复记录 。"
+    }
+  ]
+}

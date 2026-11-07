@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "离线思考翻译",
+    "description": "在本地把英文思考内容翻译成中文，不向任何服务器发送文本。"
+  },
+  "translating": "正在本地翻译…",
+  "failed": "本地翻译失败",
+  "modelMissing": "模型还没下载——打开左侧栏的「离线翻译」面板下载它",
+  "retry": "重试",
+  "original": "看原文",
+  "translation": "看译文",
+  "modelMissing": "本地模型未安装",
+  "copy": "复制代码",
+  "copied": "已复制",
+  "codeTitle": "代码",
+  "wrap": "自动换行",
+  "unwrap": "取消换行",
+  "footnotes": "脚注"
+}
