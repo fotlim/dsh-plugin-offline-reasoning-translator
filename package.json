@@ -5,6 +5,14 @@
   "type": "module",
   "license": "Apache-2.0",
   "icon": "./icon.svg",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fotlim/dsh-plugin-offline-reasoning-translator.git"
+  },
+  "homepage": "https://github.com/fotlim/dsh-plugin-offline-reasoning-translator#readme",
+  "bugs": {
+    "url": "https://github.com/fotlim/dsh-plugin-offline-reasoning-translator/issues"
+  },
   "keywords": [
     "dsh-plugin",
     "translation",

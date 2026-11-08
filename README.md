@@ -8,7 +8,7 @@ DSH 的思考区（reasoning / Think 行）默认展示模型原文。英文思�
 
 这个插件用一条 **OPUS-MT en→zh INT8 ONNX** 模型（首次使用时下载，约 108 MiB），在 Host 进程的 **worker 线程**里做推理：
 
-- **离线**：模型随插件分发，运行时 `allowRemoteModels=false`，全程不出本机。
+- **离线**：权重首次使用时下载到本机（`~/.dsh-offline-reasoning-translator/models`），推理时 `allowRemoteModels=false`，全程不出本机。
 - **低占用**：INT8 权重 ~108 MiB，单 worker 峰值 RSS ~557 MB（Phase 0 实测）。worker **按需启动**——从不展开思考的会话既不加载模型、也不占用内存；插件卸载时先等在途原生推理调用排空再终止 worker。
 - **不卡 UI**：ONNX 推理是同步原生调用（实测单次占住事件循环 130–212 ms），因此全部放进 `worker_threads`，主线程事件循环不受影响。
 - **可取消**：每次翻译带 `AbortSignal`，思考内容增长或折叠时丢弃在途结果。
@@ -85,14 +85,16 @@ DSH 的思考区（reasoning / Think 行）默认展示模型原文。英文思�
 
 ## 安装
 
+从 npm（推荐）：
+
 ```bash
-dsh plugin --profile web add <npm 包名>
+dsh plugin --profile web add dsh-plugin-offline-reasoning-translator
 ```
 
-或从源码目录：
+直接从 GitHub 装（npm 发布前也可以用这条路）：
 
 ```bash
-dsh plugin --profile web add github:owner/repo
+dsh plugin --profile web add github:fotlim/dsh-plugin-offline-reasoning-translator
 ```
 
 装好后在 **设置 → 插件** 里启用 `离线思考翻译`。**首次使用前下载模型**：点左侧栏的「离线翻译」图标 → 在模型卡片上点「下载」（q8 约 108 MiB，走官方源失败会自动切镜像，可断点续传）。没下载时思考区不会瞎翻，只会提示「模型还没下载」。
