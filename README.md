@@ -129,6 +129,7 @@ batched 推理实测**退化**（4 句出现复读、8 句全部劣化），因�
 | 整段 vs 逐句（24s 思考片段） | 整段 8244 ms 且会复读；逐句 5206 ms、4 片段、0 次退化 |
 | 取消（AbortSignal） | ✅ 保留原文并标记 aborted |
 | 卸载排空 | ✅ drain 219 ms 后 terminate，未触发 `STATUS_STACK_BUFFER_OVERRUN` |
+| **打包产物干净安装** | ✅ 把 `pnpm pack` 出来的 tgz 装进空项目（只补 Host 侧 peer：`@deepseek-ai/cordis`、`@deepseek-ai/dsh-typert-protocol`）→ 能挂载、7 个方法全在、`models.json` 3 档可读、**权重不在包里**（`models/` 缺省指向 `~/.dsh-offline-reasoning-translator`）、中文直通不启动 worker、缺模型抛 `model-not-installed` |
 
 ### 七个会让整条插件静默降级或静默失效的坑（已修，已加回归测试）
 
