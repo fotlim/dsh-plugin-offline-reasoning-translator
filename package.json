@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-offline-reasoning-translator",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Offline English-to-Chinese translation of reasoning text in DSH sessions, powered by a local NMT model that is downloaded on first use.",
   "type": "module",
   "license": "Apache-2.0",

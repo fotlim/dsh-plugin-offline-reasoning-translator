@@ -12,6 +12,7 @@ import { mask, unmaskDetailed } from './lib/mask.js'
 import { repairConcepts, resolveGlossary } from './lib/glossary.js'
 import { postprocess } from './lib/postprocess.js'
 import { assess, RETRY_GENERATION } from './lib/quality.js'
+import { needsTranslation } from './lib/language.js'
 import { normalizeSource } from './lib/normalize.js'
 import { splitForTranslation } from './lib/segment.js'
 import {
@@ -196,7 +197,7 @@ export default class OfflineReasoningTranslator extends TypertRemoteService {
   /** Ids the worker still has to answer, including calls whose caller gave up. */
   outstanding = new Set()
   nextId = 1
-  stats = { requests: 0, hits: 0, failures: 0, fragments: 0, degraded: 0, retries: 0 }
+  stats = { requests: 0, hits: 0, failures: 0, fragments: 0, degraded: 0, retries: 0, skipped: 0 }
   /** Live download state, surfaced by {@link modelStatus}. */
   transfer = { id: null, phase: 'idle', doneBytes: 0, totalBytes: 0, file: null, endpoint: null, error: null }
   downloadController = undefined
@@ -328,7 +329,21 @@ export default class OfflineReasoningTranslator extends TypertRemoteService {
    */
   async translatePiece(text, targetLanguage, signal, options) {
     if (text.trim() === '') return text
+    // The model is one-way English→Chinese. Chinese input comes back as noise
+    // (`?~ ~.~.~7****`, scrambled dates), so sentences that are already Chinese
+    // pass through untouched — and a mixed block still translates its English
+    // sentences, because the gate runs per sentence.
+    if (!needsTranslation(text)) {
+      this.stats.skipped += 1
+      return text
+    }
     const { masked, slots } = mask(text, options.glossary)
+    // Everything word-like was a span (a lone command, a path, a URL): the
+    // model would only echo placeholders and pay a decode for nothing.
+    if (!/[A-Za-z]/.test(masked)) {
+      this.stats.skipped += 1
+      return text
+    }
     /**
      * A usable attempt: the output is neither degenerate nor holding a mangled
      * placeholder, and every span came back. `null` means the piece needs the
