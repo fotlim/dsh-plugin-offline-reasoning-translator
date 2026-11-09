@@ -5,14 +5,38 @@
   "pipeline": "translation",
   "endpoints": ["https://huggingface.co", "https://hf-mirror.com"],
   "shared": {
-    "config.json": { "size": 1503, "sha256": null },
-    "generation_config.json": { "size": 293, "sha256": null },
-    "tokenizer.json": { "size": 6380952, "sha256": null },
-    "tokenizer_config.json": { "size": 282, "sha256": null },
-    "special_tokens_map.json": { "size": 74, "sha256": null },
-    "vocab.json": { "size": 1747795, "sha256": null },
-    "source.spm": { "size": 806435, "sha256": null },
-    "target.spm": { "size": 804600, "sha256": null }
+    "config.json": {
+      "size": 1503,
+      "sha256": "4727d1229a04f95bf6f39abf949d8080615433d99d6ebd85f81c09edd247d5fa"
+    },
+    "generation_config.json": {
+      "size": 293,
+      "sha256": "b743baabb7da4c1a2f19fe558bd6b4c0c7c3b0762fcb5ca7a48fe5a2c2219803"
+    },
+    "tokenizer.json": {
+      "size": 6380952,
+      "sha256": "d0c7da27056e8f42adce9e76d8e792e5daa64e15f5acd2e7aabf0121877dd4c1"
+    },
+    "tokenizer_config.json": {
+      "size": 282,
+      "sha256": "a914596e6bff113a8428d4793b586da87cd0b95697a0e72aba90cc1d95858481"
+    },
+    "special_tokens_map.json": {
+      "size": 74,
+      "sha256": "5e4d1f5e759d74cb1c2fe1d165cfc62b5237aa904de759380cd6f43042eec723"
+    },
+    "vocab.json": {
+      "size": 1747795,
+      "sha256": "22c957348eed495ee925afc40a36da3e387c8a34a734c8486967c2dca271613e"
+    },
+    "source.spm": {
+      "size": 806435,
+      "sha256": "5775ddc9e3ff2fae91554da56468ad35ff56edaba870fea74447bc7234bfdaa8"
+    },
+    "target.spm": {
+      "size": 804600,
+      "sha256": "81dc94efa84e4025ef38d25d5d07429fe41e3eb29d44003f1db6fe98487b0052"
+    }
   },
   "models": [
     {

@@ -194,8 +194,16 @@ export default class OfflineReasoningTranslator extends TypertRemoteService {
   cache = new LruCache(CACHE_LIMIT)
   worker = undefined
   pending = new Map()
-  /** Ids the worker still has to answer, including calls whose caller gave up. */
-  outstanding = new Set()
+  /**
+   * Ids the worker still has to answer, including calls whose caller gave up,
+   * mapped to the worker that owns them.
+   *
+   * The owner matters: after a model switch the old worker drains while a new
+   * one may already be loading, and a single shared set would make the drain
+   * wait for the *new* worker's traffic (or, cleared too early, terminate the old
+   * one mid-inference and crash the Host).
+   */
+  outstanding = new Map()
   nextId = 1
   stats = { requests: 0, hits: 0, failures: 0, fragments: 0, degraded: 0, retries: 0, skipped: 0 }
   /** Live download state, surfaced by {@link modelStatus}. */
@@ -587,7 +595,7 @@ export default class OfflineReasoningTranslator extends TypertRemoteService {
         reject(signal?.reason ?? new Error('aborted'))
       }
       signal?.addEventListener?.('abort', onAbort, { once: true })
-      this.outstanding.add(id)
+      this.outstanding.set(id, worker)
       this.pending.set(id, {
         resolve: (value) => {
           signal?.removeEventListener?.('abort', onAbort)
@@ -598,7 +606,17 @@ export default class OfflineReasoningTranslator extends TypertRemoteService {
           reject(error)
         }
       })
-      worker.postMessage({ id, op: 'translate', text, targetLanguage, options: override })
+      try {
+        worker.postMessage({ id, op: 'translate', text, targetLanguage, options: override })
+      } catch (error) {
+        // The worker can be gone between `ensureWorker()` and this line (it dies
+        // asynchronously). Without this cleanup the entry would sit in `pending`
+        // forever, inflating `status().pending` and stalling the dispose drain.
+        this.pending.delete(id)
+        this.outstanding.delete(id)
+        signal?.removeEventListener?.('abort', onAbort)
+        reject(error)
+      }
     })
   }
 
@@ -636,13 +654,16 @@ export default class OfflineReasoningTranslator extends TypertRemoteService {
       else entry.reject(new Error(message.error))
     })
     worker.on('error', (error) => {
-      this.worker = undefined
-      this.failAll(error, true)
+      if (this.worker === worker) this.worker = undefined
+      this.failAll(error, true, worker)
     })
     worker.on('exit', (code) => {
-      this.worker = undefined
-      if (code !== 0) this.failAll(new Error(`translation worker exited with code ${code}`), true)
-      else this.failAll(new Error('translation worker exited'), true)
+      if (this.worker === worker) this.worker = undefined
+      this.failAll(
+        new Error(code === 0 ? 'translation worker exited' : `translation worker exited with code ${code}`),
+        true,
+        worker
+      )
     })
     this.worker = worker
     return worker
@@ -655,13 +676,22 @@ export default class OfflineReasoningTranslator extends TypertRemoteService {
    *   answer; a live worker keeps its `outstanding` ids so the dispose drain can
    *   see them (clearing them here would make the drain terminate instantly and
    *   crash mid-inference).
+   * @param worker - the worker whose ids to drop when `workerGone`; omitted means
+   *   every worker (a teardown of the whole service).
    */
-  failAll(error, workerGone = false) {
+  failAll(error, workerGone = false, worker = undefined) {
     for (const [id, entry] of this.pending) {
       this.pending.delete(id)
       entry.reject(error)
     }
-    if (workerGone) this.outstanding.clear()
+    if (!workerGone) return
+    if (worker === undefined) {
+      this.outstanding.clear()
+      return
+    }
+    for (const [id, owner] of this.outstanding) {
+      if (owner === worker) this.outstanding.delete(id)
+    }
   }
 
   /**
@@ -674,25 +704,43 @@ export default class OfflineReasoningTranslator extends TypertRemoteService {
    * everything it was given (an aborted caller still leaves its native call
    * running). Verified crash-free by `scripts/exit-probe3.mjs`.
    *
+   * Resolves when the worker is gone (or the drain gave up). A model switch
+   * awaits it, so the old weights are released before the next worker loads: two
+   * resident sessions would cost ~1.1 GB.
+   *
    * If the drain overruns DRAIN_TIMEOUT_MS the worker is left alone: it is idle
    * between calls, and the process reclaims it on exit.
+   *
+   * @returns {Promise<void>}
    */
   disposeWorker() {
     this.failAll(new Error('service disposed'))
     const worker = this.worker
     this.worker = undefined
-    if (worker === undefined) return
-    const started = Date.now()
-    const finish = () => {
-      if (this.outstanding.size === 0) {
-        worker.terminate().catch(() => {})
-        return
+    if (worker === undefined) return Promise.resolve()
+    const ownIds = () => {
+      let count = 0
+      for (const owner of this.outstanding.values()) {
+        if (owner === worker) count += 1
       }
-      if (Date.now() - started > DRAIN_TIMEOUT_MS) return
-      const timer = setTimeout(finish, 25)
-      timer.unref?.()
+      return count
     }
-    finish()
+    return new Promise((resolve) => {
+      const started = Date.now()
+      const finish = () => {
+        if (ownIds() === 0) {
+          worker.terminate().then(resolve, () => resolve())
+          return
+        }
+        if (Date.now() - started > DRAIN_TIMEOUT_MS) {
+          resolve()
+          return
+        }
+        const timer = setTimeout(finish, 25)
+        timer.unref?.()
+      }
+      finish()
+    })
   }
 }
 

@@ -9,7 +9,7 @@ const HERE = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.dirname(HERE)
 
 const worker = new Worker(new URL('../lib/worker.js', import.meta.url), {
-  workerData: { modelRoot: path.join(ROOT, 'models'), modelId: 'Xenova/opus-mt-en-zh', pipeline: 'translation', dtype: 'q8' }
+  workerData: { modelRoot: path.join(ROOT, 'models', 'opus-mt-en-zh-q8'), modelId: 'Xenova/opus-mt-en-zh', pipeline: 'translation', dtype: 'q8' }
 })
 let nextId = 1
 const pending = new Map()

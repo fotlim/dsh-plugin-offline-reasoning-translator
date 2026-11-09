@@ -130,8 +130,9 @@ batched 推理实测**退化**（4 句出现复读、8 句全部劣化），因�
 | 取消（AbortSignal） | ✅ 保留原文并标记 aborted |
 | 卸载排空 | ✅ drain 219 ms 后 terminate，未触发 `STATUS_STACK_BUFFER_OVERRUN` |
 | **打包产物干净安装** | ✅ 把 `pnpm pack` 出来的 tgz 装进空项目（只补 Host 侧 peer：`@deepseek-ai/cordis`、`@deepseek-ai/dsh-typert-protocol`）→ 能挂载、7 个方法全在、`models.json` 3 档可读、**权重不在包里**（`models/` 缺省指向 `~/.dsh-offline-reasoning-translator`）、中文直通不启动 worker、缺模型抛 `model-not-installed` |
+| **发布前审计回归（v0.6.2）** | ✅ `scripts/audit-test.mjs` 覆盖术语超预算 / 重复占位符 / 代码保真 / worker 已死四类；9 套测试全绿；100 句回归质量指标与 v0.6 完全一致（`mustHit 7/7`、`degraded 0`、`residual 24`），中位 869 ms |
 
-### 七个会让整条插件静默降级或静默失效的坑（已修，已加回归测试）
+### 十个会让整条插件静默降级或静默失效的坑（已修，已加回归测试）
 
 1. **Remote 方法名不能与 namespace service 成员重名**。客户端网关把方法装到 `RemoteNamespaceService` 实例上，`assertMethodAvailable` 会拒绝 `ctx`/`empty`/`invokeRemote`/`methods`/`name`/`namespace`/`install`/`installDirect`/`installScoped`/`remove`/`has`/`assertMethodAvailable` 这些已有成员。最初把删除模型的方法命名为 `remove`，整个 `$mount` 抛错、插件退化到 `priority: 49` 的降级渲染，但错误只在浏览器控制台里。现改名 `removeModel`，并在 `scripts/client-test.mjs` 里加了保留名断言。
 2. **Config 必须用 `@deepseek-ai/schemastery` 声明**，用 zod 会让 `ctx.plugin()` 静默失败（fiber 状态异常、无 error 上报）。
@@ -140,6 +141,9 @@ batched 推理实测**退化**（4 句出现复读、8 句全部劣化），因�
 5. **`.volatile()` 字段读出来不是值，是 holder**（v0.4 踩过，最隐蔽）。`schemastery` 把 volatile 字段包成冻结对象 `{ get() }`，直接读 `config.glossary` 得到 `{}`、`typeof x === 'string'` 全失败，设置项静默不生效。要用 `readField(value, fallback)` 先 `typeof value?.get === 'function'` 再 `.get()`。
 6. **主题 token 写错不会报错，只会不生效**（v0.5 踩过）。`var(--dsw-alias-border-l4)`、`var(--dsw-alias-label-tertiary)`、`var(--dsw-radius-md)` 这类名字谁都不拦你，但它们在主题里不存在——CSS 变量解析失败让整条声明在计算值阶段作废，于是边框消失、次要文字继承了主色，看起来「没样式」。官方只有 14 个 `--dsw-alias-*` token（含 `border-l1`/`border-l2`/`bg-layer-1`/`bg-layer-2`/`brand-primary`/`label-secondary`/`state-*-primary`）。`scripts/client-test.mjs` 现在会把样式表里出现的每个 token 与白名单比对，写错直接测试失败。
 7. **掩码规则不能串行跑**（v0.6 踩过）。每条规则替换完就产出占位符 `[0]`，后一条规则若能匹配这个形状（如保护源码字面下标 `arr[0]` 的 `/\[\d+\]/`），就会把占位符当成源码再掩一次——`slots` 里多出一个 `"[0]"`，正文最终露出 `[0]` 而丢失真正的内容。修法是把全部跨度规则合成**一条**正则单趟替换，规则之间互不可见；同时占位符形状从 `<<0>>` 换成 `[0]`（实测 5/5 原样返回，尖括号写法 0/5）。
+8. **术语表溢出预算时不能回填中文**（v0.6.2 审计发现）。一句话命中超过 2 个术语时，原实现把「已算好的中文译法」原样塞回英文源文（`replacement` 可能是 `边界情况`），等于让 en→zh 模型收到混语种句子——实测会重复整个从句。改为保持英文原词（`return match`），术语表只是保护壳，不该改写源文。
+9. **worker 加载失败不能被永久缓存**（v0.6.2 审计发现）。`pipelinePromise` 一旦 reject 而仍被缓存，之后每一句都会立刻失败，直到用户重载插件；而失败原因可能只是一次瞬时锁文件/内存峰值。现在失败即清空缓存，下一句重新加载。
+10. **源文本矫正不能碰代码**（v0.6.2 审计发现）。为修复硬折行而做的空格折叠，会连同围栏代码块里的对齐空格一起吃掉（`    const b  =  2`）。现在先把围栏块与行内代码抽成占位符，矫正完再原样放回。
 
 环境：Windows 10.0.26300、Ryzen 7 3700X、Node 24.21.0（DSH Electron 44.7.0，ABI 149）。
 
@@ -151,6 +155,7 @@ batched 推理实测**退化**（4 句出现复读、8 句全部劣化），因�
 - **可选模型有限**：`models.json` 目前只列 en→zh 的三个量化档（q8/fp16/fp32），其中只有 q8 与 fp32 实测过；fp16 未实测。
 - **目标语言固定**：客户端请求固定 `targetLanguage: 'zh'`，配置里没有语言选项（与官方 cot-translation 的 provider 选择不同，本地只有这一条 en→zh 模型）。
 - **平台**：`onnxruntime-node` 官方 prebuild 覆盖 win32/darwin/linux × x64/arm64；Windows + Electron 44.7（Node 24.21 / ABI 149）已实测可用。
+- **校验值来源**：`models.json` 里两个大 ONNX 的 sha256 取自上游 LFS 元数据，8 个共享小文件（词表/tokenizer/spm/config）的 sha256 是本机下载、并跑通 100 句回归的那份副本实测值 —— 同样是上游原样文件，但口径不同，写在这里以免被误读为官方签名。
 
 ## 许可证
 

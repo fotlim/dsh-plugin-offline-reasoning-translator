@@ -80,7 +80,8 @@ window.__ModuleLoader__.load({
       unwrap: 'Unwrap lines',
       footnotes: 'Footnotes',
       modelsTitle: 'Local models',
-      modelsIntro: 'The bundled model works offline out of the box.',
+      modelsIntro: 'Weights download once on first use; after that everything runs offline.',
+      modelMissing: 'Model not downloaded yet — open the Offline translation panel in the sidebar and download it',
       activeModel: 'active',
       recommended: 'recommended',
       notDownloaded: 'not downloaded',
@@ -122,7 +123,8 @@ window.__ModuleLoader__.load({
       unwrap: '取消换行',
       footnotes: '脚注',
       modelsTitle: '本地模型',
-      modelsIntro: '内置模型开箱即可离线使用。',
+      modelsIntro: '权重在首次使用时下载一次，之后就完全离线运行。',
+      modelMissing: '模型还没下载——打开左侧栏的「离线翻译」面板下载它',
       activeModel: '使用中',
       recommended: '推荐',
       notDownloaded: '未下载',
@@ -533,6 +535,13 @@ window.__ModuleLoader__.load({
         } finally {
           this.pending = false
           this.emit()
+          // `update()` calls that landed while the loop was finishing found
+          // `pending === true`, so their own `run()` did nothing. Without this
+          // recheck the tail of a streamed paragraph waits for the next token —
+          // and the last paragraph never gets one.
+          if (!this.failed && !this.isDisposed() && nextOf() !== undefined) {
+            void this.run()
+          }
         }
       }
     }
@@ -558,18 +567,28 @@ window.__ModuleLoader__.load({
       const [original, setOriginal] = react.useState(false)
       const translation = react.useRef(undefined)
 
+      // The slot may hand over a fresh `translate` closure whenever it recomputes
+      // props. Holding the controller's lifetime on that identity would abort the
+      // request in flight and wipe the per-disclosure cache on every streamed
+      // token, so the closure is read through a ref and the controller lives for
+      // exactly as long as the disclosure is mounted.
+      const translateRef = react.useRef(translateRequests)
+      translateRef.current = translateRequests
+
       react.useEffect(() => {
-        const controller = new ReasoningTranslation(MAX_TEXT_CHARS, translateRequests, setState)
+        const controller = new ReasoningTranslation(MAX_TEXT_CHARS, (request, signal) =>
+          translateRef.current(request, signal), setState
+        )
         translation.current = controller
         return () => {
           controller.dispose()
           translation.current = undefined
         }
-      }, [translate])
+      }, [])
 
       react.useEffect(() => {
         translation.current?.update(text, running)
-      }, [text, running, translate])
+      }, [text, running])
 
       const labels = react.useMemo(
         () => ({
@@ -1113,7 +1132,9 @@ window.__ModuleLoader__.load({
           if (!result?.ok) throw result?.error ?? new Error('unavailable')
           setCatalog(result.value)
           setTransfer(result.value?.transfer ?? null)
-          setError(null)
+          // Deliberately no `setError(null)` here: this refresh runs in the
+          // `finally` of a download, so clearing would erase the very failure
+          // the user needs to read. Mutations clear the error when they start.
         } catch (failure) {
           setError(failure)
         }
@@ -1178,7 +1199,9 @@ window.__ModuleLoader__.load({
             busyId,
             transfer,
             t,
-            onUse: () => {},
+            // Switching from the plugin page must work as well as from the
+            // sidebar panel: this was a dead button until it actually saved.
+            onUse: (id) => run(id, (request) => props.saveSettings({ modelId: request.id })),
             onDownload: (id) => run(id, props.download),
             onRemove: (id) => run(id, props.remove)
           }),
@@ -1279,7 +1302,9 @@ function PanelPage(props) {
                 ? { ...previous }
                 : { modelId: value.modelId, glossary: value.glossary, repair: value.repair }
             )
-            setError(null)
+            // No `setError(null)` on success, for the same reason as
+            // ModelManager: this reload also runs after a failed download or
+            // removal and must not swallow its message.
           } catch (failure) {
             setError(failure)
           }
