@@ -85,22 +85,22 @@ DSH 的思考区（reasoning / Think 行）默认展示模型原文。英文思�
 
 ## 安装
 
-从 npm（推荐，尚未发布时用下面两条）：
+从打好的 tarball 装（**当前推荐**，免现场构建，66 KiB）：
 
 ```bash
-dsh plugin --profile web add dsh-plugin-offline-reasoning-translator
+dsh plugin --profile web add "https://github.com/fotlim/dsh-plugin-offline-reasoning-translator/releases/download/v0.6.2/dsh-plugin-offline-reasoning-translator-0.6.2.tgz"
 ```
 
-直接从 GitHub 装（npm 发布前也可以用这条路）：
+或者直接从 GitHub 源装：
 
 ```bash
 dsh plugin --profile web add github:fotlim/dsh-plugin-offline-reasoning-translator
 ```
 
-或者用打好的 tarball（免现场构建，体积 66 KiB）：
+npm 包名已定为 `dsh-plugin-offline-reasoning-translator`，但**尚未发布**（账号侧的安全限制未解除）。等发布后这条命令同样可用：
 
 ```bash
-dsh plugin --profile web add "https://github.com/fotlim/dsh-plugin-offline-reasoning-translator/releases/download/v0.6.2/dsh-plugin-offline-reasoning-translator-0.6.2.tgz"
+dsh plugin --profile web add dsh-plugin-offline-reasoning-translator
 ```
 
 装好后在 **设置 → 插件** 里启用 `离线思考翻译`。**首次使用前下载模型**：点左侧栏的「离线翻译」图标 → 在模型卡片上点「下载」（q8 约 108 MiB，走官方源失败会自动切镜像，可断点续传）。没下载时思考区不会瞎翻，只会提示「模型还没下载」。
